@@ -11,10 +11,6 @@ namespace Com.Larkintuckerllc.Bounce
         {
             __INIT,
             MODE_SET,
-            MZ_POSITION_X_SET,
-            MZ_POSITION_Z_SET,
-            MZ_SCALE_X_SET,
-            MZ_SCALE_Z_SET,
             TOUCH_X_SET,
             TOUCH_Y_SET,
             THUNK,
@@ -33,24 +29,12 @@ namespace Com.Larkintuckerllc.Bounce
             bool hasChanged = false;
             Mode.ModeEnum nextMode = Mode.Reducer(state.Mode, action);
             if (nextMode != state.Mode) { hasChanged = true; }
-            int nextMZPositionX = MZPositionX.Reducer(state.MZPositionX, action);
-            if (nextMZPositionX != state.MZPositionX) { hasChanged = true; }
-            int nextMZPositionZ = MZPositionZ.Reducer(state.MZPositionZ, action);
-            if (nextMZPositionZ != state.MZPositionZ) { hasChanged = true; }
-            int nextMZScaleX = MZScaleX.Reducer(state.MZScaleX, action);
-            if (nextMZScaleX != state.MZScaleX) { hasChanged = true; }
-            int nextMZScaleZ = MZScaleZ.Reducer(state.MZScaleZ, action);
-            if (nextMZScaleZ != state.MZScaleZ) { hasChanged = true; }
             int nextTouchX = TouchX.Reducer(state.TouchX, action);
             if (nextTouchX != state.TouchX) { hasChanged = true; }
             int nextTouchY = TouchY.Reducer(state.TouchY, action);
             if (nextTouchY != state.TouchY) { hasChanged = true; }
             return hasChanged ? new State(
                 nextMode,
-                nextMZPositionX,
-                nextMZPositionZ,
-                nextMZScaleX,
-                nextMZScaleZ,
                 nextTouchX,
                 nextTouchY
             ) : state;
@@ -89,10 +73,6 @@ namespace Com.Larkintuckerllc.Bounce
             // UPDATE FOR EACH DUCK
             State initialState = new State(
                 Mode.InitialState,
-                MZPositionX.InitialState,
-                MZPositionZ.InitialState,
-                MZScaleX.InitialState,
-                MZScaleZ.InitialState,
                 TouchX.InitialState,
                 TouchY.InitialState
             );

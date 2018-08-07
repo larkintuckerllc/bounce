@@ -8,14 +8,12 @@ namespace Com.Larkintuckerllc.Bounce
     {
         Mode.ModeEnum _mode = Mode.InitialState;
         MLSpatialMapper _mLSpatialMapper;
-        int _positionX = MZPositionX.InitialState;
-        int _positionZ = MZPositionZ.InitialState;
-        int _scaleX = MZScaleX.InitialState;
-        int _scaleZ = MZScaleZ.InitialState;
+        GameObject _meshingZone; // REFERENCE FOR PERFORMANCE
 
 		private void Awake()
 		{
             _mLSpatialMapper = GetComponent<MLSpatialMapper>();
+            _meshingZone = GameObject.Find("MeshingZone");
 		}
 
 		void Start()
@@ -23,26 +21,12 @@ namespace Com.Larkintuckerllc.Bounce
             Provider.Store.Subscribe(state =>
             {
                 Mode.ModeEnum nextMode = Mode.ModeGet(state);
-                int nextPositionX = MZPositionX.MZPositionXGet(state);
-                int nextPositionZ = MZPositionZ.MZPositionZGet(state);
-                int nextScaleX = MZScaleX.MZScaleXGet(state);
-                int nextScaleZ = MZScaleZ.MZScaleZGet(state);
-                if (
-                    nextMode == _mode &&
-                    nextPositionX == _positionX &&
-                    nextPositionZ == _positionZ &&
-                    nextScaleX == _scaleX &&
-                    nextScaleZ == _scaleZ
-                ) { return; }
+                if (nextMode == _mode) { return; }
                 _mode = nextMode;
-                _positionX = nextPositionX;
-                _positionZ = nextPositionZ;
-                _scaleX = nextScaleX;
-                _scaleZ = nextScaleZ;
                 if (_mode == Mode.ModeEnum.Meshing)
                 {
-                    var position = new Vector3((float)_positionX / 100, 0.0f, (float)_positionZ / 100);
-                    var scale = new Vector3((float)_scaleX, 2.0f, (float)_scaleZ);
+                    transform.position = _meshingZone.transform.position;
+                    transform.localScale = _meshingZone.transform.localScale;
                     _mLSpatialMapper.enabled = true;
                 }
             });
