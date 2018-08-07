@@ -10,11 +10,11 @@ namespace Com.Larkintuckerllc.Bounce
         MLSpatialMapper _mLSpatialMapper;
         GameObject _meshingZone; // REFERENCE FOR PERFORMANCE
 
-		private void Awake()
-		{
+        private void Awake()
+        {
             _mLSpatialMapper = GetComponent<MLSpatialMapper>();
             _meshingZone = GameObject.Find("MeshingZone");
-		}
+        }
 
 		void Start()
         {
