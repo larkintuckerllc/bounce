@@ -28,6 +28,8 @@ namespace Com.Larkintuckerllc.Bounce
                     transform.position = _meshingZone.transform.position;
                     transform.localScale = _meshingZone.transform.localScale;
                     _mLSpatialMapper.enabled = true;
+                } else {
+                    _mLSpatialMapper.enabled = false;
                 }
             });
         }
