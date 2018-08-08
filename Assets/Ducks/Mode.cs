@@ -2,7 +2,7 @@
 {
     public class Mode : Singleton<Mode>
     {
-        public enum ModeEnum { Positioning, Scaling, Meshing };
+        public enum ModeEnum { Positioning, Scaling, Meshing, Placement, Aim };
 
         public static ModeEnum InitialState = ModeEnum.Positioning;
 

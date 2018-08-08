@@ -58,6 +58,12 @@ namespace Com.Larkintuckerllc.Bounce
                 case Mode.ModeEnum.Scaling:
                     Provider.Dispatch(Mode.Instance.ModeSet(Mode.ModeEnum.Meshing));
                     break;
+                case Mode.ModeEnum.Meshing:
+                    Provider.Dispatch(Mode.Instance.ModeSet(Mode.ModeEnum.Placement));
+                    break;
+                case Mode.ModeEnum.Placement:
+                    Provider.Dispatch(Mode.Instance.ModeSet(Mode.ModeEnum.Aim));
+                    break;
             }
         }
 

@@ -11,6 +11,8 @@ namespace Com.Larkintuckerllc.Bounce
         {
             __INIT,
             MODE_SET,
+            PLACEMENT_SET,
+            PLACEMENT_VALID_SET,
             TOUCH_X_SET,
             TOUCH_Y_SET,
             THUNK,
@@ -29,12 +31,18 @@ namespace Com.Larkintuckerllc.Bounce
             bool hasChanged = false;
             Mode.ModeEnum nextMode = Mode.Reducer(state.Mode, action);
             if (nextMode != state.Mode) { hasChanged = true; }
+            Triplet nextPlacement = Placement.Reducer(state.Placement, action);
+            if (nextPlacement != state.Placement) { hasChanged = true; }
+            bool nextPlacementValid = PlacementValid.Reducer(state.PlacementValid, action);
+            if (nextPlacementValid!= state.PlacementValid) { hasChanged = true; }
             int nextTouchX = TouchX.Reducer(state.TouchX, action);
             if (nextTouchX != state.TouchX) { hasChanged = true; }
             int nextTouchY = TouchY.Reducer(state.TouchY, action);
             if (nextTouchY != state.TouchY) { hasChanged = true; }
             return hasChanged ? new State(
                 nextMode,
+                nextPlacement,
+                nextPlacementValid,
                 nextTouchX,
                 nextTouchY
             ) : state;
@@ -73,6 +81,8 @@ namespace Com.Larkintuckerllc.Bounce
             // UPDATE FOR EACH DUCK
             State initialState = new State(
                 Mode.InitialState,
+                Placement.InitialState,
+                PlacementValid.InitialState,
                 TouchX.InitialState,
                 TouchY.InitialState
             );
