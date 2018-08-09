@@ -64,6 +64,9 @@ namespace Com.Larkintuckerllc.Bounce
                 case Mode.ModeEnum.Placement:
                     Provider.Dispatch(Mode.Instance.ModeSet(Mode.ModeEnum.Aim));
                     break;
+                case Mode.ModeEnum.Aim:
+                    Provider.Dispatch(Mode.Instance.ModeSet(Mode.ModeEnum.Action));
+                    break;
             }
         }
 

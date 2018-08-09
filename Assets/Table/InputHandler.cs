@@ -8,8 +8,6 @@ namespace Com.Larkintuckerllc.Bounce
         static uint TOUCH_CONTROL = 0;
 
         MLInputController _controller;
-        int touchX = TouchX.InitialState;
-        int touchY = TouchY.InitialState;
 
         void Awake()
         {
@@ -26,18 +24,8 @@ namespace Com.Larkintuckerllc.Bounce
         void Update()
         {
             var touch = _controller.State.TouchPosAndForce[TOUCH_CONTROL];
-            var nextTouchX = (int)(touch.x * 10);
-            var nextTouchY = (int)(touch.y * 10);
-            if (nextTouchX != touchX)
-            {
-                Provider.Dispatch(TouchX.Instance.TouchXSet(nextTouchX));
-                touchX = nextTouchX;
-            }
-            if (nextTouchY != touchY)
-            {
-                Provider.Dispatch(TouchY.Instance.TouchYSet(nextTouchY));
-                touchY = nextTouchY;
-            }
+            Global.touchX = touch.x;
+            Global.touchY = touch.y;
         }
 
         void OnDestroy()
