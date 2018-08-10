@@ -37,11 +37,7 @@ namespace Com.Larkintuckerllc.Bounce
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit))
             {
-                var placementX = (int)(hit.point.x * 100);
-                var placementY = (int)(hit.point.y * 100);
-                var placementZ = (int)(hit.point.z * 100);
-                var placement = new Triplet(placementX, placementY, placementZ);
-                Provider.Dispatch(Placement.Instance.PlacementSet(placement));
+                Global.placement = hit.point;
                 if (!_placementValid)
                 {
                     Provider.Dispatch(PlacementValid.Instance.PlacementValidSet(true));

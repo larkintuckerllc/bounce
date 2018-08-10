@@ -8,12 +8,10 @@ namespace Com.Larkintuckerllc.Bounce
     {
         Mode.ModeEnum _mode = Mode.InitialState;
         MLSpatialMapper _mLSpatialMapper;
-        GameObject _meshingZone; // REFERENCE FOR PERFORMANCE
 
         private void Awake()
         {
             _mLSpatialMapper = GetComponent<MLSpatialMapper>();
-            _meshingZone = GameObject.Find("MeshingZone");
         }
 
 		void Start()
@@ -25,8 +23,8 @@ namespace Com.Larkintuckerllc.Bounce
                 _mode = nextMode;
                 if (_mode == Mode.ModeEnum.Meshing)
                 {
-                    transform.position = _meshingZone.transform.position;
-                    transform.localScale = _meshingZone.transform.localScale;
+                    transform.position = Global.mZPosition;
+                    transform.localScale = Global.mZLocalScale;
                     _mLSpatialMapper.enabled = true;
                 } else {
                     _mLSpatialMapper.enabled = false;

@@ -12,8 +12,6 @@ namespace Com.Larkintuckerllc.Bounce
 
         public Mode.ModeEnum PayloadModeEnum { get; private set; }
 
-        public Triplet PayloadTriplet { get; private set; }
-
         public Action(Provider.Actions type)
         {
             this.Type = type;
@@ -35,12 +33,6 @@ namespace Com.Larkintuckerllc.Bounce
         {
             this.Type = type;
             this.PayloadModeEnum = payload;
-        }
-
-        public Action(Provider.Actions type, Triplet payload)
-        {
-            this.Type = type;
-            this.PayloadTriplet = payload;
         }
 
         public Action(Action<Action<Action>> function)

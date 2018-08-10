@@ -11,8 +11,6 @@ namespace Com.Larkintuckerllc.Bounce
 
         Mode.ModeEnum _mode = Mode.InitialState;
         Renderer _renderer;
-        int _touchX = TouchX.InitialState;
-        int _touchY = TouchY.InitialState;
 
 		private void Awake()
 		{
@@ -24,17 +22,8 @@ namespace Com.Larkintuckerllc.Bounce
             Provider.Store.Subscribe(state =>
             {
                 Mode.ModeEnum nextMode = Mode.ModeGet(state);
-                int nextTouchX = TouchX.TouchXGet(state);
-                int nextTouchY = TouchY.TouchYGet(state);
-                if (
-                    nextMode == _mode &&
-                    nextTouchX == _touchX &&
-                    nextTouchY == _touchY
-                ) { return; }
-
+                if (nextMode == _mode) { return; }
                 _mode = nextMode;
-                _touchX = nextTouchX;
-                _touchY = nextTouchY;
                 if (_mode == Mode.ModeEnum.Meshing)
                 {
                     _renderer.enabled = false;
@@ -50,21 +39,23 @@ namespace Com.Larkintuckerllc.Bounce
             switch (_mode)
             {
                 case Mode.ModeEnum.Positioning:
-                    position.x += POSITIONING_SPEED * (float)_touchX / 10 * deltaTime;
-                    position.z += POSITIONING_SPEED * (float)_touchY / 10 * deltaTime;
+                    position.x += POSITIONING_SPEED * Global.touchX * deltaTime;
+                    position.z += POSITIONING_SPEED * Global.touchY * deltaTime;
                     transform.position = position;
+                    Global.mZPosition = position;
                     break;
                 case Mode.ModeEnum.Scaling:
                     if (
-                        (scale.x <= 1 && _touchX < 0) ||
-                        (scale.z <= 1 && _touchY < 0)
+                        (scale.x <= 1 && Global.touchX < 0) ||
+                        (scale.z <= 1 && Global.touchY < 0)
                     )
                     {
                         break;
                     }
-                    scale.x += SCALING_SPEED * (float)_touchX / 10 * deltaTime;
-                    scale.z += SCALING_SPEED * (float)_touchY / 10 * deltaTime;
+                    scale.x += SCALING_SPEED * Global.touchX * deltaTime;
+                    scale.z += SCALING_SPEED * Global.touchY * deltaTime;
                     transform.localScale = scale;
+                    Global.mZLocalScale = scale;
                     break;
             }
         }
