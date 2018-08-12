@@ -10,7 +10,14 @@ namespace Com.Larkintuckerllc.Bounce
         Mode.ModeEnum _mode = Mode.InitialState;
         bool _placementValid = PlacementValid.InitialState;
 
-        void Start()
+        private void Awake()
+        {
+            Global.mainCameraForward = transform.forward;
+            Global.mainCameraPosition = transform.position;
+            Global.mainCameraRotation = transform.rotation;
+        }
+
+		void Start()
         {
             Provider.Store.Subscribe(state =>
             {
@@ -25,6 +32,9 @@ namespace Com.Larkintuckerllc.Bounce
 
         void Update()
         {
+            Global.mainCameraForward = transform.forward;
+            Global.mainCameraPosition = transform.position;
+            Global.mainCameraRotation = transform.rotation;
             var now = Time.time;
             if (_casting && ((now - _last) >= 1.0f)) {
                 Cast();

@@ -12,6 +12,7 @@ namespace Com.Larkintuckerllc.Bounce
             __INIT,
             MODE_SET,
             PLACEMENT_VALID_SET,
+            SCORE_INCREMENT,
             THUNK,
         }
 
@@ -30,9 +31,12 @@ namespace Com.Larkintuckerllc.Bounce
             if (nextMode != state.Mode) { hasChanged = true; }
             bool nextPlacementValid = PlacementValid.Reducer(state.PlacementValid, action);
             if (nextPlacementValid!= state.PlacementValid) { hasChanged = true; }
+            int nextScore = Score.Reducer(state.Score, action);
+            if (nextScore != state.Score) { hasChanged = true; }
             return hasChanged ? new State(
                 nextMode,
-                nextPlacementValid
+                nextPlacementValid,
+                nextScore
             ) : state;
         }
 
@@ -69,7 +73,8 @@ namespace Com.Larkintuckerllc.Bounce
             // UPDATE FOR EACH DUCK
             State initialState = new State(
                 Mode.InitialState,
-                PlacementValid.InitialState
+                PlacementValid.InitialState,
+                Score.InitialState
             );
 
             Store = new BehaviorSubject<State>(initialState);

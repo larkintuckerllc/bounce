@@ -57,5 +57,10 @@ namespace Com.Larkintuckerllc.Bounce
                 transform.position = Vector3.MoveTowards(transform.position, position, step);
             }
         }
+
+		private void OnCollisionEnter(Collision collision)
+		{
+            Provider.Dispatch(Score.Instance.ScoreIncrement());
+		}
 	}
 }

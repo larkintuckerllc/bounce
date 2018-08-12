@@ -12,6 +12,7 @@ namespace Com.Larkintuckerllc.Bounce
         Mode.ModeEnum _mode = Mode.InitialState;
         bool _first = true;
         bool _posed = false;
+        bool _placementValid = PlacementValid.InitialState;
 
         void Awake()
         {
@@ -33,8 +34,10 @@ namespace Com.Larkintuckerllc.Bounce
             Provider.Store.Subscribe(state =>
             {
                 Mode.ModeEnum nextMode = Mode.ModeGet(state);
-                if ( nextMode == _mode ) { return; }
+                bool nextPlacementValid = PlacementValid.PlacementValidGet(state);
+                if ( nextMode == _mode && nextPlacementValid == _placementValid) { return; }
                 _mode = nextMode;
+                _placementValid = nextPlacementValid;
             });
         }
 
@@ -62,6 +65,7 @@ namespace Com.Larkintuckerllc.Bounce
                     Provider.Dispatch(Mode.Instance.ModeSet(Mode.ModeEnum.Placement));
                     break;
                 case Mode.ModeEnum.Placement:
+                    if (!_placementValid) { break; }
                     Provider.Dispatch(Mode.Instance.ModeSet(Mode.ModeEnum.Aim));
                     break;
                 case Mode.ModeEnum.Aim:
